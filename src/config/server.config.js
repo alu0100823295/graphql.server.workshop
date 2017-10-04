@@ -12,7 +12,7 @@ const SERVER_ENV = {
     'development': { 
         api_gql: {
             url: 'http://localhost',
-            port: 4500
+            port: 4000
         },
         api_rest: {
             url: 'http://localhost',
