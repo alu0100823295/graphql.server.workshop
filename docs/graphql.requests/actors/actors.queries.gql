@@ -1,0 +1,49 @@
+query {
+  allActors {
+    id
+    name
+    height
+    country
+  }
+}
+
+query {
+  actorsById(id: 1) {
+    id
+    name
+    height
+    country
+  }
+}
+
+query {
+  actorsById(id: 1) {
+    id
+    name
+    movies {
+      id
+      title
+    }
+  }
+}
+
+query {
+  actorsById(id: [1]) {
+    name
+    movies {
+      title
+      description
+      poster_image
+      duration
+      rating
+      classification
+      year
+      actors {
+        name
+      }
+      genres {
+        name
+      }
+    }
+  }
+}

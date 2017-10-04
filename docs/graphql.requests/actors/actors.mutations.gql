@@ -1,0 +1,58 @@
+# ############     ACTORS     ############
+
+mutation {
+  addActor(name: "Actor Test") {
+    id
+    name
+  }
+}
+
+mutation {
+  addActor(name: "Actor Test", movies: [1,2,3]) {
+    id
+    name
+    movies {
+      id
+      title
+    }
+  }
+}
+
+mutation {
+  addMoviesToActor(id: 29, movies: [2, 3, 4]) {
+    id
+    name
+    movies {
+      id
+      title
+    }
+  }
+}
+
+mutation {
+  deleteActorMovies(id: 29, movies: [3, 4]) {
+    id
+    name
+    movies {
+      id
+      title
+    }
+  }
+}
+
+mutation {
+  updateActor(id: 29, name: "Pepito") {
+    id
+    name
+  }
+}
+
+# Benedict Cumberbatch
+
+mutation {
+  deleteActor(id: 29) {
+    id
+    name
+    picture
+  }
+}
