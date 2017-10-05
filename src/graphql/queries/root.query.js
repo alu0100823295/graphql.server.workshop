@@ -11,14 +11,14 @@ var RootQueryType = new GraphQLObjectType({
         allDirectors: DirectorsQuery.allQuery,
         directorsById: DirectorsQuery.byIdQuery,
 
-        // allWriters: WritersQuery.allQuery,
-        // writersById: WritersQuery.byIdQuery,
+        //allWriters: WritersQuery.allQuery,
+        //writersById: WritersQuery.byIdQuery,
 
         // allActors: ActorsQuery.allQuery,
         // actorsById: ActorsQuery.byIdQuery,
 
-        // allGenres: GenresQuery.allQuery,
-        // genresById: GenresQuery.byIdQuery,
+        allGenres: GenresQuery.allQuery,
+        genresById: GenresQuery.byIdQuery,
 
         // allMovies: MoviesQuery.allQuery,
         // moviesById: MoviesQuery.byIdQuery,
