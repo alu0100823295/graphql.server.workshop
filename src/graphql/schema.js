@@ -7,7 +7,7 @@ import RootQueryType from './queries/root.query';
 // GrpahQL en nuestro proyecto.
 
 export default new GraphQLSchema({
-    query: 'Definir el RootQuery para el esquema actual'
+    query: RootQueryType
 });
 
 /*

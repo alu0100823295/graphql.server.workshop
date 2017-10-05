@@ -10,7 +10,7 @@ var logger = log4js.getLogger('server');
 
 import { environment, serverConf }  from './config';
 
-import schema from './graphql/schema';
+import graphQLschema from './graphql/schema';
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(
     '/graphql', 
     graphqlHTTP((request, response, graphQLParams) => ({
         graphiql: (environment.match('development')) ? true : false,
-        schema: 'Añadir el shcema del proyecto aquí'
+        schema: graphQLschema
     }))
 );
 

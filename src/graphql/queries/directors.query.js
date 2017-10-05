@@ -11,10 +11,10 @@ import * as utils from '../shared/utils';
 // la consulta, así como la operación necesaria para obtener dicho objetivo.
 
 var allQuery = {
-    type: 'Definir el objeto tipo (DirectorType) que devolverá esta consulta',
+    type: new GraphQLList(DirectorType),
     description: 'List of all stored directors.',
     resolve: async (parentValues, args) => {
-        return 'Devolver la consulta para todos los Directores';
+        return await DirectorsService.getDirectorsData();
     }
 };
 
