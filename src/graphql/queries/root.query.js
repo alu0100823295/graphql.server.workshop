@@ -1,6 +1,9 @@
 import { GraphQLObjectType } from 'graphql';
 
 import * as DirectorsQuery from './directors.query';
+import * as GenresQuery from './genres.query';
+
+// Tarea: Inlcuir los métodos 'allGenres' y 'genresById' en las queries de GraphQL.
 
 var RootQueryType = new GraphQLObjectType({
     name: 'RootQuery',
