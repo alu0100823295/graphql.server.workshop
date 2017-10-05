@@ -14,14 +14,11 @@ import schema from './graphql/schema';
 
 const app = express();
 
-// Como paso final antes de poder realizar nuestra primera consulta,
-// debemos decirle al middleware de GrpahQL qué shcema vamos a usar.
-
 app.use(
     '/graphql', 
     graphqlHTTP((request, response, graphQLParams) => ({
         graphiql: (environment.match('development')) ? true : false,
-        schema: 'Añadir el shcema del proyecto aquí'
+        schema: schema
     }))
 );
 
@@ -34,8 +31,3 @@ app.listen(
         logger.info(`App running on ${environment.toUpperCase()} mode and listening on port ${serverConf.api_gql.port} ...`);
     }
 );
-
-/*
-Solución:
-schema: schema
-*/
