@@ -5,65 +5,32 @@ import {
     GraphQLNonNull
 } from 'graphql';
 
-// Tarea 1: Importar el Objetos Tipo que vamos a modificar.
-
-// Tarea 2: Importaremos los servicios que vayamos a emplear.
-
-var addDirector = {
-    // Tarea 3: Definir el objeto tipo que vamos a devolver.
-    type: 'Objeto tipo que se va a ver afectado por la mutación',
-    args: {
-        // Tarea 4: Definir el argumento que vamos a pasar para crear al Director.
-        // Pista: Debe ser de tipo cadena de caracteres y nunca podrá ser null.
-        agumentos: 'que serán usados por la mutación'
-    },
-    resolve: async (parentValues, args) => {
-        // Tarea 5: Implementar el código necesario para llevar a cabo las operaciones propias de la mutación.
-    }
-};
-
-// Tarea 6: Implementar la mutación 'updateDirector'.
-// var updateDirector = {};
-
-// Tarea 7: Implementar la mutación 'deleteDirector'.
-// var deleteDirector = {};
-
-export {
-    addDirector,
-    // updateDirector,
-    // deleteDirector,
-    // addMoviesToDirector,
-    // deleteDirectorMovies
-};
-
-/*
-Solución Tarea 1
 import DirectorType from '../models/director.type';
 
-Solución Tarea 2
 import * as DirectorsService from '../services/directors.service';
 import * as MoviesDirectorsService from '../services/movies-directors.service';
 
-Solución Tarea 3
-type: DirectorType
+var addDirector = {
+    type: DirectorType,
+    args: {
+        name: { type: new GraphQLNonNull(GraphQLString) },
+        movies: { type: new GraphQLList(GraphQLInt) }
+    },
+    resolve: async (parentValues, args) => {
+        try {
+            let persistedDirectorData = await DirectorsService.persistNewDirector({ name: args.name });
 
-Solución Tarea 4
-name: { type: new GraphQLNonNull(GraphQLString) }
-
-Solución Tarea 5
-try {
-    let persistedDirectorData = await DirectorsService.persistNewDirector({ name: args.name });
-
-    if (args.movies) {
-        await MoviesDirectorsService.addMoviesToDirector(persistedDirectorData.id, args.movies);
+            if (args.movies) {
+                await MoviesDirectorsService.addMoviesToDirector(persistedDirectorData.id, args.movies);
+            }
+            
+            return persistedDirectorData;
+        } catch (error) {
+            return error;
+        }
     }
-    
-    return persistedDirectorData;
-} catch (error) {
-    return error;
-}
+};
 
-Solcuión Tarea 6
 var updateDirector = {
     type: DirectorType,
     args: {
@@ -79,7 +46,6 @@ var updateDirector = {
     }
 };
 
-Solución Tarea 7
 var deleteDirector = {
     type: DirectorType,
     args: {
@@ -93,4 +59,48 @@ var deleteDirector = {
         }
     }
 };
-*/
+
+var addMoviesToDirector = {
+    type: DirectorType,
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLInt) },
+        movies: { type:new GraphQLNonNull(new GraphQLList(GraphQLInt)) }
+    },
+    resolve: async (parentValues, args) => {
+        try {
+            let persistedDirectorMoviesData = await MoviesDirectorsService.addMoviesToDirector(args.id, args.movies);
+
+            if (persistedDirectorMoviesData) {
+                return await DirectorsService.getDirectorsData(args.id);
+            } else {
+                return [];
+            }
+        } catch (error) {
+            return error;
+        }
+    }
+};
+
+var deleteDirectorMovies = {
+    type: DirectorType,
+    args: {
+        id: { type: new GraphQLNonNull(GraphQLInt) },
+        movies: { type:new GraphQLNonNull(new GraphQLList(GraphQLInt)) }
+    },
+    resolve: async (parentValues, args) => {
+        try {
+            await MoviesDirectorsService.deleteDirectorMovies(args.id, args.movies);
+            return await DirectorsService.getDirectorsData(args.id);
+        } catch (error) {
+            return error;
+        }
+    }
+};
+
+export {
+    addDirector,
+    updateDirector,
+    deleteDirector,
+    addMoviesToDirector,
+    deleteDirectorMovies
+};
